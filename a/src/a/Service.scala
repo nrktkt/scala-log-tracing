@@ -6,13 +6,16 @@ import Main.executionContext
 import Main.system
 import com.typesafe.scalalogging.LazyLogging
 
-import scala.util.Random
+import scala.util.{Random, Success}
 
 class Service(bPort: Int) extends LazyLogging {
 
   def callB = {
     val greeting = greetings(Random.nextInt(greetings.length))
-    Http().singleRequest(Post(s"http://localhost:$bPort", s"$greeting B"))
+    val start = System.currentTimeMillis
+    Http()
+      .singleRequest(Post(s"http://localhost:$bPort", s"$greeting B"))
+      .andThen { case Success(_) => logger.info(s"b took ${System.currentTimeMillis - start}ms to respond") }
   }
 
   val greetings = List(
