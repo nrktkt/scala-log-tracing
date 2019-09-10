@@ -5,13 +5,14 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
 import com.typesafe.scalalogging.LazyLogging
+import monix.execution.schedulers.TracingScheduler
 
+import scala.concurrent.ExecutionContext
 import scala.io.StdIn
 
 trait HttpApp extends App with LazyLogging {
-  implicit val system = ActorSystem("my-system")
+  implicit val system = ActorSystem("default", defaultExecutionContext = Some(TracingScheduler(ExecutionContext.global)))
   implicit val materializer = ActorMaterializer()
-  // needed for the future flatMap/onComplete in the end
   implicit val executionContext = system.dispatcher
 
   def route: Route

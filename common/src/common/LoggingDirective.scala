@@ -16,7 +16,7 @@ class LoggingDirective(implicit ec: ExecutionContext) extends LazyLogging {
           val time = System.currentTimeMillis - start
           val request = ctx.request
           val requestString = s"${request.method.value} ${request.uri} ${request.protocol.value}"
-          logger.info(s"responded to $requestString in ${time}ms")
+          logger.info(s"[${CorrelationId.local()}] responded to $requestString in ${time}ms")
       }
     }
 }

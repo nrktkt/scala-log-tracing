@@ -2,6 +2,7 @@ package a
 
 import akka.http.scaladsl.server.Directives._
 import common.{HttpApp, LoggingDirective}
+import common.CorrelationIdDirectives.withCorrelationId
 
 object Main extends HttpApp {
 
@@ -10,11 +11,14 @@ object Main extends HttpApp {
   val loggingDirective = new LoggingDirective()
   val service = new Service(8081)
 
-  val route = loggingDirective.log(
-    complete(
-      service.callB
+  val route =
+    withCorrelationId (
+      loggingDirective.log(
+        complete(
+          service.callB
+        )
+      )
     )
-  )
 
   start()
 }
