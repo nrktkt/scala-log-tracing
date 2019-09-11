@@ -6,7 +6,7 @@ trait BaseModule extends ScalaModule {
   def ivyDeps = Agg(
     ivy"com.typesafe.akka::akka-http:10.1.9",
     ivy"com.typesafe.akka::akka-stream:2.5.25",
-    ivy"io.monix::monix:3.0.0-RC5",
+    ivy"io.monix::monix:3.0.0",
     ivy"com.typesafe.scala-logging::scala-logging:3.9.2",
     ivy"org.slf4j:slf4j-simple:1.7.28"
   )
